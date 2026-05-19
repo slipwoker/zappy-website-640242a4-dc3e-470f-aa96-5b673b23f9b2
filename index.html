@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>גלי את הסוד לגבות מושלמות — נטלי דנילוב עיצוב גבות</title>
+    <meta name="description" content="רוצה ללמוד עיצוב גבות טבעיות כמו מקצוענית? קורס עיצוב גבות טבעיות של נטלי דנילוב מעניק לך את כל הכלים להצליח. הירשמי עכשיו!">
+    <meta name="keywords" content="קורס עיצוב גבות טבעיות, קורס גבות למתחילות, קורס גבות אונליין, קורס עיצוב גבות, עיצוב גבות מקצועי">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: '640242a4-dc3e-470f-aa96-5b673b23f9b2',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+    <meta property="og:title" content="גלי את הסוד לגבות מושלמות — נטלי דנילוב עיצוב גבות">
+    <meta property="og:description" content="רוצה ללמוד עיצוב גבות טבעיות כמו מקצוענית? קורס עיצוב גבות טבעיות של נטלי דנילוב מעניק לך את כל הכלים להצליח. הירשמי עכשיו!">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="גלי את הסוד לגבות מושלמות — נטלי דנילוב עיצוב גבות">
+    <meta name="twitter:description" content="רוצה ללמוד עיצוב גבות טבעיות כמו מקצוענית? קורס עיצוב גבות טבעיות של נטלי דנילוב מעניק לך את כל הכלים להצליח. הירשמי עכשיו!">
+    <meta property="og:type" content="website">
+  <meta property="og:locale" content="he_IL">
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .skip-link { position: absolute; top: 0; left: 0; transform: translateY(-200%); padding: 12px 18px; background: var(--bg-dark, #1a1a1a); color: var(--text-light, #fff); font-weight: 600; border-radius: 0 0 8px 0; z-index: 10000; }
+    .skip-link:focus { transform: none; outline: 2px solid var(--ring, #fff); outline-offset: 2px; }
+    :focus-visible { outline: 2px solid var(--ring, currentColor); outline-offset: 3px; }
+  </style>
+
+
+  
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css">
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: var(--text-dark, #333) !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+      [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 10px !important; padding-right: 28px !important; }
+      .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus (exclude catalog sub-menus that use <a> children instead of <li>) */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))):not(:has(> a)), .sub-menu:not(:has(li)):not(:has(> a)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .navbar .sub-menu.mobile-expanded, .nav-menu .sub-menu.mobile-expanded, #navMenu .sub-menu.mobile-expanded { max-height: none !important; overflow-y: visible !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; position: relative !important; min-height: 44px !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; min-width: 0 !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; min-width: 0 !important; padding: 0 !important; line-height: inherit !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu, .navbar li:has(.sub-menu) > .sub-menu, #navMenu li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: auto !important; background: transparent !important; border: none !important; cursor: pointer !important; color: var(--text-dark) !important; position: static !important; flex-shrink: 0 !important; align-self: stretch !important; z-index: 2 !important; padding: 0 !important; margin: 0 !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; color: var(--text-dark) !important; white-space: normal !important; }
+        .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+        [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 0 !important; padding-right: 28px !important; }
+        .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+        .nav-menu.active, #navMenu.active { max-width: 100vw !important; overflow-x: hidden !important; box-sizing: border-box !important; }
+        .navbar .sub-menu li a, nav.navbar .sub-menu li a, .zappy-products-dropdown .sub-menu a { color: var(--text-dark) !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+
+    <style id="zappy-widget-visibility">
+      html[dir="rtl"] .whatsapp-float { right: 20px !important; left: auto !important; }
+      html[dir="ltr"] .whatsapp-float, html:not([dir]) .whatsapp-float { left: 20px !important; right: auto !important; }
+      html[dir="rtl"] #mic-access-tool-general-button, html[dir="rtl"] .mic-access-tool-general-button,
+      html[dir="rtl"] #mic-init-access-tool .mic-access-tool-general-button,
+      html[dir="rtl"] #mic-init-access-tool #mic-access-tool-general-button,
+      html[dir="rtl"] ._access-icon { left: 20px !important; right: auto !important; }
+      html[dir="ltr"] #mic-access-tool-general-button, html[dir="ltr"] .mic-access-tool-general-button,
+      html[dir="ltr"] #mic-init-access-tool .mic-access-tool-general-button,
+      html[dir="ltr"] #mic-init-access-tool #mic-access-tool-general-button,
+      html[dir="ltr"] ._access-icon,
+      html:not([dir]) #mic-access-tool-general-button, html:not([dir]) .mic-access-tool-general-button,
+      html:not([dir]) #mic-init-access-tool .mic-access-tool-general-button,
+      html:not([dir]) #mic-init-access-tool #mic-access-tool-general-button,
+      html:not([dir]) ._access-icon { right: 20px !important; left: auto !important; }
+      @media (max-width: 768px) { .whatsapp-float { display: flex !important; } }
+      @media (min-width: 769px) { .whatsapp-float { display: flex !important; } }
+      @media (max-width: 768px) {
+        #mic-access-tool-general-button, .mic-access-tool-general-button,
+        #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+        ._access-icon { display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; }
+        #mic-access-tool-box.opened-mic-access-tool, .mic-access-tool-box.opened-mic-access-tool,
+        #mic-init-access-tool #mic-access-tool-box.opened-mic-access-tool {
+          visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+        }
+      }
+      @media (min-width: 769px) {
+        #mic-access-tool-general-button, .mic-access-tool-general-button,
+        #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+        ._access-icon { display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; }
+        #mic-access-tool-box.opened-mic-access-tool, .mic-access-tool-box.opened-mic-access-tool,
+        #mic-init-access-tool #mic-access-tool-box.opened-mic-access-tool {
+          visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+        }
+      }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main">דלג לתוכן הראשי</a>
+  <nav class="navbar" dir="rtl">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display: none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+
+  <button class="phone-header-btn" data-phone="[business_phone]" aria-label="Call">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+
+  <div class="nav-container">
+    <div class="nav-right-group"><div class="nav-brand">
+      <a href="/" class="logo-link"><img class="logo" src="/assets/site-----image-1.webp" alt="נטלי דנילוב עיצוב גבות"></a>
+    </div><ul class="nav-menu" id="navMenu"><li><a href="#features">יתרונות</a></li><li><a href="#about">אודות</a></li><li><a href="#gallery">גלריה</a></li><li><a href="#testimonials">המלצות</a></li><li><a href="#stats">נתונים</a></li></ul></div>
+
+    
+
+    <div class="nav-cta-container">
+      <a href="#contact" class="nav-cta-btn">צור קשר</a>
+    </div>
+  </div>
+</nav>
+<script>
+
+// Navbar Mobile Menu Toggle and Contrast Fix
+(function() {
+  // Use 'load' event instead of 'DOMContentLoaded' to ensure we run AFTER all other scripts
+  window.addEventListener('load', function() {
+    
+    // FIX MOBILE BUTTON CONTRAST
+    // Detect navbar background color and apply contrasting color to mobile buttons
+    const navbar = document.querySelector('.navbar, nav, header');
+    if (!navbar) {
+      console.log('[Navbar] Navbar element not found');
+      return;
+    }
+    
+    // DECLARE VARIABLES EARLY to avoid Temporal Dead Zone errors
+    // These are used in multiple places below
+    let mobileToggle = document.getElementById('mobileToggle') ||
+                       document.querySelector('.mobile-toggle') ||
+                       document.querySelector('.hamburger') ||
+                       document.querySelector('.hamburger-menu') ||
+                       document.querySelector('.menu-toggle') ||
+                       document.querySelector('.burger-menu') ||
+                       document.querySelector('[aria-label="Menu"]') ||
+                       document.querySelector('[aria-label="תפריט"]');
+    
+    const phoneBtn = document.querySelector('.phone-header-btn');
+    
+    const computedStyle = window.getComputedStyle(navbar);
+    let bgColor = computedStyle.backgroundColor;
+    
+    console.log('[Navbar] Initial navbar background:', bgColor);
+    
+    // Check if background is transparent or rgba with 0 alpha
+    const isTransparent = bgColor === 'transparent' || 
+                         bgColor === 'rgba(0, 0, 0, 0)' ||
+                         (bgColor.startsWith('rgba') && bgColor.includes(', 0)'));
+    
+    if (isTransparent) {
+      // Check for background-image or gradient
+      const bgImage = computedStyle.backgroundImage;
+      if (bgImage && bgImage !== 'none') {
+        console.log('[Navbar] Navbar has background image/gradient, using dark text');
+        bgColor = 'rgb(240, 240, 240)'; // Assume light background
+      } else {
+        // Transparent navbar - check body background
+        const bodyBg = window.getComputedStyle(document.body).backgroundColor;
+        console.log('[Navbar] Navbar transparent, using body background:', bodyBg);
+        bgColor = bodyBg;
+      }
+    }
+    
+    // Calculate luminance to determine if background is light or dark
+    const rgb = bgColor.match(/\d+/g);
+    if (rgb && rgb.length >= 3) {
+      const r = parseInt(rgb[0]);
+      const g = parseInt(rgb[1]);
+      const b = parseInt(rgb[2]);
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      
+      // Mobile button colors are set by Claude's AI-generated CSS (same as .nav-menu a)
+      // No dynamic color overrides needed - colors come from the generated navbar CSS
+      console.log('[Navbar] Mobile button colors preserved from Claude CSS (luminance:', luminance.toFixed(2) + ')');
+      
+      // FIX ICON SIZES - Ensure SVGs are properly sized and visible
+      // INJECT CRITICAL CSS TO OVERRIDE ANY CONFLICTING RULES
+      const criticalCSS = document.createElement('style');
+      criticalCSS.id = 'zappy-mobile-nav-fix';
+      const htmlLang = document.documentElement.lang || 'en';
+      const htmlDir = document.documentElement.dir || 'ltr';
+      // Check both dir attribute AND lang for RTL detection
+      // dir="rtl" is the most reliable indicator
+      const isRTL = htmlDir === 'rtl' || htmlLang === 'he' || htmlLang === 'ar';
+      
+      criticalCSS.textContent = `
+        /* Hide mobile buttons on desktop, show only on mobile */
+        @media (min-width: 769px) {
+          .mobile-toggle,
+          .phone-header-btn {
+            display: none !important;
+          }
+        }
+        
+        /* Show and position mobile buttons correctly on mobile */
+        @media (max-width: 768px) {
+          .navbar,
+          nav.navbar {
+            min-height: 70px !important;
+          }
+
+          .mobile-toggle,
+          .phone-header-btn {
+            position: absolute !important;
+            top: 0 !important;
+            bottom: 0 !important;
+            margin-top: auto !important;
+            margin-bottom: auto !important;
+            transform: none !important;
+            z-index: 1001 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+            border: none !important;
+            cursor: pointer !important;
+            padding: 6px !important;
+            background: none !important;
+            color: var(--nav-text, var(--text-dark)) !important;
+            touch-action: manipulation !important;
+            -webkit-tap-highlight-color: transparent !important;
+          }
+
+          html[data-zappy-site-type="ecommerce"] .phone-header-btn,
+          body[data-zappy-site-type="ecommerce"] .phone-header-btn,
+          html[data-zappy-site-type="ecommerce"] header .phone-header-btn,
+          html[data-zappy-site-type="ecommerce"] nav .phone-header-btn {
+            display: none !important;
+            visibility: hidden !important;
+            width: 0 !important;
+            height: 0 !important;
+            min-width: 0 !important;
+            overflow: hidden !important;
+          }
+          
+          /* LTR positioning (default): hamburger LEFT, phone RIGHT */
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .mobile-toggle,
+          html[dir="ltr"] .mobile-toggle {
+            left: 12px !important;
+            right: auto !important;
+          }
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .phone-header-btn,
+          html[dir="ltr"] .phone-header-btn {
+            right: 12px !important;
+            left: auto !important;
+          }
+          
+          /* RTL positioning: hamburger RIGHT, phone LEFT */
+          html[dir="rtl"] .mobile-toggle,
+          html[lang="he"] .mobile-toggle,
+          html[lang="ar"] .mobile-toggle {
+            right: 12px !important;
+            left: auto !important;
+          }
+          html[dir="rtl"] .phone-header-btn,
+          html[lang="he"] .phone-header-btn,
+          html[lang="ar"] .phone-header-btn {
+            left: 12px !important;
+            right: auto !important;
+          }
+          
+          /* CRITICAL: Ensure nav-container has min-height on mobile */
+          /* All children are positioned absolutely/fixed on mobile, so height:auto collapses to 0 */
+          .nav-container {
+            min-height: 70px !important;
+            position: relative !important;
+          }
+          
+          /* Ensure SVG icons are properly sized and inherit color */
+          .mobile-toggle svg,
+          .phone-header-btn svg {
+            width: 24px !important;
+            height: 24px !important;
+            /* Don't force display - let JavaScript control hamburger/close toggle */
+          }
+          
+          /* Reset nav-cta-container on mobile - remove desktop box-shadow/padding */
+          /* that creates a visible ghost box when CTA button is hidden */
+          .nav-cta-container {
+            box-shadow: none !important;
+            padding: 0 !important;
+          }
+          
+          /* Hide nav-cta-container entirely on mobile when there's no lang-switcher */
+          /* (only the CTA button is inside, and it's hidden on mobile) */
+          .nav-cta-container:not(:has(.lang-switcher)) {
+            display: none !important;
+          }
+          
+          /* CRITICAL: Prevent hero image fade gradient from bleeding over headline text */
+          /* The .image-fade-gradient has bottom: -30px (extends below parent) */
+          /* On mobile stacked layout, this overlaps the h1 text below the image */
+          .hero-image-column {
+            overflow: hidden !important;
+          }
+          .image-fade-gradient {
+            bottom: 0 !important;
+          }
+          
+          /* Hide desktop language switcher on mobile - hamburger menu handles it */
+          /* High specificity to override stored CSS */
+          .lang-switcher,
+          .nav-cta-container .lang-switcher,
+          .nav-container .lang-switcher,
+          .navbar .lang-switcher,
+          .navbar .nav-cta-container .lang-switcher {
+            display: none !important;
+          }
+        }
+      `;
+      
+      // Remove existing fix if present and inject new one
+      const existing = document.getElementById('zappy-mobile-nav-fix');
+      if (existing) existing.remove();
+      document.head.appendChild(criticalCSS);
+      
+      console.log('[Navbar] Critical CSS injected for mobile nav positioning');
+      
+      // ONLY apply inline positioning styles on mobile viewport
+      // On desktop, the CSS handles hiding these buttons with display: none
+      // Inline styles were breaking desktop layout by overriding CSS
+      const isMobileViewport = window.innerWidth <= 768;
+      
+      if (mobileToggle) {
+        // Icon sizing applies to all viewports for consistency
+        const hamburgerIcon = mobileToggle.querySelector('.hamburger-icon');
+        const closeIcon = mobileToggle.querySelector('.close-icon');
+        
+        if (hamburgerIcon) {
+          hamburgerIcon.style.setProperty('width', '24px', 'important');
+          hamburgerIcon.style.setProperty('height', '24px', 'important');
+          hamburgerIcon.style.setProperty('display', 'block', 'important'); // Show hamburger by default
+        }
+        if (closeIcon) {
+          closeIcon.style.setProperty('width', '24px', 'important');
+          closeIcon.style.setProperty('height', '24px', 'important');
+          closeIcon.style.setProperty('display', 'none', 'important'); // Hide close icon by default
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          mobileToggle.style.setProperty('position', 'absolute', 'important');
+          mobileToggle.style.setProperty('top', '0', 'important');
+          mobileToggle.style.setProperty('bottom', '0', 'important');
+          mobileToggle.style.setProperty('margin-top', 'auto', 'important');
+          mobileToggle.style.setProperty('margin-bottom', 'auto', 'important');
+          mobileToggle.style.setProperty('transform', 'none', 'important');
+          mobileToggle.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          
+          console.log('[Navbar] Mobile toggle positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          mobileToggle.style.removeProperty('position');
+          mobileToggle.style.removeProperty('top');
+          mobileToggle.style.removeProperty('transform');
+          mobileToggle.style.removeProperty('z-index');
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared mobile toggle inline positioning');
+        }
+      }
+      
+      if (phoneBtn) {
+        // Icon sizing applies to all viewports
+        const phoneIcon = phoneBtn.querySelector('svg');
+        if (phoneIcon) {
+          phoneIcon.style.width = '24px';
+          phoneIcon.style.height = '24px';
+          phoneIcon.setAttribute('width', '24');
+          phoneIcon.setAttribute('height', '24');
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          phoneBtn.style.setProperty('position', 'absolute', 'important');
+          phoneBtn.style.setProperty('top', '0', 'important');
+          phoneBtn.style.setProperty('bottom', '0', 'important');
+          phoneBtn.style.setProperty('margin-top', 'auto', 'important');
+          phoneBtn.style.setProperty('margin-bottom', 'auto', 'important');
+          phoneBtn.style.setProperty('transform', 'none', 'important');
+          phoneBtn.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          
+          console.log('[Navbar] Phone button positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          phoneBtn.style.removeProperty('position');
+          phoneBtn.style.removeProperty('top');
+          phoneBtn.style.removeProperty('transform');
+          phoneBtn.style.removeProperty('z-index');
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared phone button inline positioning');
+        }
+      }
+    } else {
+      console.log('[Navbar] Could not parse background color:', bgColor);
+    }
+    
+    // MOBILE MENU TOGGLE
+    // Re-query in case DOM changed (mobileToggle already declared at top of function)
+    mobileToggle = document.getElementById('mobileToggle') ||
+                   document.querySelector('.mobile-toggle') ||
+                   document.querySelector('.hamburger') ||
+                   document.querySelector('.hamburger-menu') ||
+                   document.querySelector('.menu-toggle') ||
+                   document.querySelector('.burger-menu') ||
+                   document.querySelector('[aria-label="Menu"]') ||
+                   document.querySelector('[aria-label="תפריט"]');
+    
+    // EXPANDED SEARCH: Find nav menu by ID or class
+    const navMenu = document.getElementById('navMenu') ||
+                  document.querySelector('.nav-menu') ||
+                  document.querySelector('.nav-links') ||
+                  document.querySelector('nav ul:not(.submenu)');
+    
+    if (!mobileToggle || !navMenu) {
+      console.log('[Navbar] Mobile toggle or menu not found:', { toggle: !!mobileToggle, menu: !!navMenu });
+      return;
+    }
+    
+    // Ensure navMenu has ID for CSS targeting
+    if (!navMenu.id) {
+      navMenu.id = 'navMenu';
+    }
+    
+    console.log('[Navbar] Initializing mobile menu...');
+    
+    // Remove any existing event listeners by cloning the button
+    const newToggle = mobileToggle.cloneNode(true);
+    mobileToggle.parentNode.replaceChild(newToggle, mobileToggle);
+    
+    // Toggle menu handler (shared by click and touchend)
+    function handleToggle(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+      const closeIcon = newToggle.querySelector('.close-icon');
+      const isActive = navMenu.classList.contains('active');
+      
+      if (isActive) {
+        // Close menu
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed');
+      } else {
+        // Open menu
+        navMenu.classList.add('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'none', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'block', 'important');
+        document.body.style.overflow = 'hidden';
+        console.log('[Navbar] Menu opened');
+      }
+    }
+    
+    // Use click for desktop/emulation and touchend as iOS Safari fallback.
+    // Prevent double-fire with a timestamp guard.
+    var lastToggleTime = 0;
+    function guardedToggle(e) {
+      var now = Date.now();
+      if (now - lastToggleTime < 300) return;
+      lastToggleTime = now;
+      handleToggle(e);
+    }
+    
+    newToggle.addEventListener('click', guardedToggle);
+    newToggle.addEventListener('touchend', guardedToggle);
+    
+    // Close menu when clicking nav links (but NOT dropdown toggles)
+    const navLinks = navMenu.querySelectorAll('a');
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        // Don't close if it's a dropdown child (unless it's a real navigation link)
+        if (this.getAttribute('href') === '#') return;
+        
+        const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+        const closeIcon = newToggle.querySelector('.close-icon');
+        
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed (link clicked)');
+      });
+    });
+    
+    // DROPDOWN MENU TOGGLE (for mobile and touch devices)
+    var dropdownToggles = navMenu.querySelectorAll('.dropdown-toggle');
+    dropdownToggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var parent = this.closest('.nav-dropdown');
+        if (!parent) return;
+        
+        // Close other open dropdowns at the same level
+        var siblings = parent.parentNode.querySelectorAll('.nav-dropdown.open');
+        siblings.forEach(function(sib) {
+          if (sib !== parent) sib.classList.remove('open');
+        });
+        
+        parent.classList.toggle('open');
+        console.log('[Navbar] Dropdown toggled:', parent.classList.contains('open') ? 'open' : 'closed');
+      });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-dropdown')) {
+        var openDropdowns = document.querySelectorAll('.nav-dropdown.open');
+        openDropdowns.forEach(function(dd) { dd.classList.remove('open'); });
+      }
+    });
+    
+    console.log('[Navbar] Dropdown handlers initialized for ' + dropdownToggles.length + ' dropdowns');
+    
+    // Phone button functionality (phoneBtn already declared at top of function)
+    if (phoneBtn) {
+      phoneBtn.addEventListener('click', function() {
+        // Get phone number from placeholder in page or use default
+        const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+        const phoneNumber = phoneLinks.length > 0 
+          ? phoneLinks[0].getAttribute('href').replace('tel:', '')
+          : '[business_phone]';
+        
+        window.location.href = 'tel:' + phoneNumber;
+        console.log('[Navbar] Phone button clicked');
+      });
+    }
+    
+    console.log('[Navbar] Mobile menu initialized successfully');
+    
+    // WhatsApp button visibility is now controlled via CSS (siteSettings).
+    // No JS-based desktop hiding — the button is visible on both mobile and desktop by default.
+  });
+})();
+
+</script>
+  
+  <main id="main">
+    <section data-band-index="0" id="hero" class="index-hero-section" data-layout-spec="בית-hero" dir="rtl" data-hero-type="fullscreen-scrim">
+  <!-- Background Image -->
+  <div class="hero-bg-wrapper">
+    <img loading="eager" fetchpriority="high" data-hero-bg="true" data-placeholder="index-hero-image-1" data-context="Warm professional beauty studio scene: a skilled woman with elegant hands shaping natural eyebrows using fine grooming tools on a client. Shallow depth of field, soft golden-hour warm light, muted earthy tones of cream, cocoa, and terracotta. Studio counter with small brushes and tools visible. Calm, premium, editorial feel. No text, no logos." width="1200" height="700" src="/assets/site-index-hero-image-1.webp" alt="עיצוב גבות טבעיות בסטודיו מקצועי" class="hero-bg-img">
+  </div>
+
+  <!-- Scrim Overlay -->
+  <div class="hero-scrim" aria-hidden="true"></div>
+
+  <!-- Botanical Decorative Motif -->
+  <svg class="hero-botanical-deco" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 180 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M90 180 C90 180 60 140 50 100 C40 60 70 30 90 10" stroke="#C9A87C" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.22"></path>
+    <path d="M90 120 C90 120 110 100 130 90" stroke="#C9A87C" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.18"></path>
+    <path d="M90 150 C90 150 65 138 50 125" stroke="#C9A87C" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.18"></path>
+    <path d="M90 90 C90 90 115 72 128 55" stroke="#C9A87C" stroke-width="1.1" stroke-linecap="round" fill="none" opacity="0.15"></path>
+    <path d="M90 60 C90 60 105 48 118 38" stroke="#C9A87C" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.13"></path>
+    <ellipse cx="132" cy="88" rx="9" ry="5" transform="rotate(-30 132 88)" fill="#C9A87C" opacity="0.13"></ellipse>
+    <ellipse cx="130" cy="54" rx="8" ry="4" transform="rotate(-20 130 54)" fill="#C9A87C" opacity="0.11"></ellipse>
+    <ellipse cx="52" cy="123" rx="8" ry="4" transform="rotate(20 52 123)" fill="#C9A87C" opacity="0.11"></ellipse>
+  </svg>
+
+  <!-- Hero Content Container -->
+  <div class="hero-content-wrapper">
+    <div class="hero-card">
+      <!-- Studio Label Microline -->
+      <span class="hero-studio-label">סטודיו נטלי דנילוב</span>
+
+      <!-- H1 Main Headline -->
+      <h1 class="hero-headline">האמנות של<br>גבות טבעיות</h1>
+
+      <!-- H3 Supporting Subtitle -->
+      <h3 class="hero-subtitle">קורס עיצוב גבות טבעיות מקצועי — לימדי את הטכניקות המובילות לעיצוב, שיפור ועיצוב מחדש של גבות בסגנון טבעי ומדויק. מסלול לימודים נגיש, מעשי ומכוון קריירה.</h3>
+
+      <!-- CTA Buttons -->
+      <div class="hero-ctas">
+        <a href="#contact" class="hero-btn-primary">הצטרפי לקורס</a>
+        <a href="#course-highlights" class="hero-btn-secondary">לפרטי הקורס</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Divider: soft curved sweep into cream -->
+  <div class="index-hero-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,90 L0,55 Q150,20 300,42 T600,28 Q800,18 1000,38 T1200,30 L1200,90 Z" fill="#FAF6F2"></path>
+    </svg>
+  </div>
+</section>
+
+<section data-band-index="1" id="features" class="index-features-section" data-layout-spec="בית-features" dir="rtl">
+  <!-- Decorative blob -->
+  <div class="ifs-blob" aria-hidden="true"></div>
+
+  <div class="ifs-container">
+    <!-- Intro block -->
+    <div class="ifs-intro">
+      <span class="ifs-eyebrow">מה תלמדי בקורס</span>
+      <h2 class="ifs-title">האמנות של גבה טבעית ומושלמת</h2>
+      <!-- Script flourish -->
+      <div class="ifs-flourish" aria-hidden="true">
+        <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 160 28" fill="none" xmlns="http://www.w3.org/2000/svg" width="160" height="28">
+          <path d="M8,22 C30,8 60,4 90,10 C115,15 140,8 155,14" stroke="var(--secondary)" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.7"></path>
+          <path d="M20,26 C50,18 80,20 110,18" stroke="var(--secondary)" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.4"></path>
+        </svg>
+      </div>
+      <p class="ifs-subtitle">קורס עיצוב גבות טבעיות שמעניק לך את הידע, הכלים והביטחון לעצב גבות שמחמיאות לכל פנים — בסטייל עדין ומקצועי</p>
+    </div>
+
+    <!-- Cards grid -->
+    <div class="ifs-grid">
+
+      <!-- Card 1 -->
+      <article class="ifs-card ifs-card--1">
+        <div class="ifs-card-motif" aria-hidden="true">
+          <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 80 36" fill="none" xmlns="http://www.w3.org/2000/svg" width="80" height="36">
+            <path d="M4,28 Q20,6 40,8 Q60,10 76,24" stroke="var(--secondary)" stroke-width="2.2" stroke-linecap="round" fill="none"></path>
+            <path d="M10,32 Q26,14 44,16 Q62,18 74,28" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.55"></path>
+            <!-- face mapping dots -->
+            <circle cx="40" cy="8" r="2.2" fill="var(--secondary)" opacity="0.5"></circle>
+            <circle cx="20" cy="18" r="1.5" fill="var(--accent)" opacity="0.4"></circle>
+            <circle cx="60" cy="16" r="1.5" fill="var(--accent)" opacity="0.4"></circle>
+          </svg>
+        </div>
+        <div class="ifs-card-icon" aria-hidden="true">
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+            <circle cx="24" cy="20" r="10" stroke="var(--secondary)" stroke-width="2" fill="none"></circle>
+            <path d="M8,38 Q16,28 24,26 Q32,28 40,38" stroke="var(--secondary)" stroke-width="2" stroke-linecap="round" fill="none"></path>
+            <path d="M14,18 Q18,12 24,11 Q30,12 34,18" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
+          </svg>
+        </div>
+        <div class="ifs-card-body">
+          <h3 class="ifs-card-title">תיאוריה של גבה טבעית</h3>
+          <p class="ifs-card-text">תלמדי כיצד לקרוא את מבנה הפנים ולזהות את קו הגבה שמחמיא לכל לקוחה. הקורס מעניק בסיס מוצק בהרמוניה פנים–גבות, פרופורציות זהב וניתוח צורת הפנים — כדי שכל עיצוב ייראה כאילו נולד כך.</p>
+        </div>
+        <div class="ifs-card-tag">תיאוריה ומיפוי</div>
+      </article>
+
+      <!-- Card 2 (slightly elevated) -->
+      <article class="ifs-card ifs-card--2">
+        <div class="ifs-card-motif" aria-hidden="true">
+          <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 80 36" fill="none" xmlns="http://www.w3.org/2000/svg" width="80" height="36">
+            <path d="M4,26 Q22,4 42,6 Q62,8 76,22" stroke="var(--secondary)" stroke-width="2.2" stroke-linecap="round" fill="none"></path>
+            <!-- styling lines -->
+            <line x1="28" y1="6" x2="28" y2="14" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" opacity="0.6"></line>
+            <line x1="40" y1="4" x2="40" y2="12" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" opacity="0.6"></line>
+            <line x1="52" y1="6" x2="52" y2="14" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" opacity="0.6"></line>
+          </svg>
+        </div>
+        <div class="ifs-card-icon" aria-hidden="true">
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+            <path d="M10,32 Q18,16 28,14 Q38,12 42,24" stroke="var(--secondary)" stroke-width="2" stroke-linecap="round" fill="none"></path>
+            <path d="M36,14 L38,8 M38,8 L34,10" stroke="var(--secondary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+            <circle cx="14" cy="34" r="2" fill="var(--accent)" opacity="0.6"></circle>
+            <path d="M18,36 Q26,30 34,28" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.5"></path>
+          </svg>
+        </div>
+        <div class="ifs-card-body">
+          <h3 class="ifs-card-title">טכניקות עיצוב ועיצוב מעשי</h3>
+          <p class="ifs-card-text">מהסרת שיער נכונה ועד לעיצוב בצבע וסיבים — תרכשי ידיים מנוסות ועין מיומנת. הקורס מלמד טכניקות עיצוב גבות מקצועיות בגישה טבעית, עם תרגול מעשי שמכין אותך לעבוד על לקוחות אמיתיות מהיום הראשון.</p>
+        </div>
+        <div class="ifs-card-tag">תרגול מעשי</div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="ifs-card ifs-card--3">
+        <div class="ifs-card-motif" aria-hidden="true">
+          <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 80 36" fill="none" xmlns="http://www.w3.org/2000/svg" width="80" height="36">
+            <path d="M6,28 Q24,8 44,10 Q64,12 76,26" stroke="var(--secondary)" stroke-width="2.2" stroke-linecap="round" fill="none"></path>
+            <!-- star/sparkle -->
+            <path d="M62,8 L64,4 L66,8 L70,10 L66,12 L64,16 L62,12 L58,10 Z" stroke="var(--accent)" stroke-width="1.2" fill="none" opacity="0.55"></path>
+          </svg>
+        </div>
+        <div class="ifs-card-icon" aria-hidden="true">
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+            <path d="M12,36 Q20,22 30,20 Q40,18 42,28" stroke="var(--secondary)" stroke-width="2" stroke-linecap="round" fill="none"></path>
+            <path d="M24,16 L24,10 M20,13 L28,13" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" fill="none"></path>
+            <circle cx="24" cy="24" r="6" stroke="var(--secondary)" stroke-width="1.5" fill="none" stroke-dasharray="3 2"></circle>
+          </svg>
+        </div>
+        <div class="ifs-card-body">
+          <h3 class="ifs-card-title">ביטחון מקצועי לכל שלב</h3>
+          <p class="ifs-card-text">בין אם את מתחילה לגמרי או מרחיבה את סל השירותים שלך — הקורס בנוי כך שתרגישי מוכנה ובטוחה. ליווי אישי, סביבת למידה חמה, ותוכן שמותאם לקצב שלך — כי כל מסע מקצועי מתחיל מצעד אחד בטוח.</p>
+        </div>
+        <div class="ifs-card-tag">ביטחון ומקצועיות</div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- Bottom divider: dusty blue organic band -->
+  <div class="ifs-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1440 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,72 L0,42 Q120,28 240,36 T480,30 Q600,24 720,32 T960,26 Q1080,20 1200,30 T1440,36 L1440,72 Z" fill="#FAF6F2" opacity="0.55"></path>
+      <path d="M0,72 L0,52 Q180,38 360,46 T720,40 Q900,34 1080,44 T1440,48 L1440,72 Z" fill="#FAF6F2"></path>
+    </svg>
+  </div>
+</section>
+
+<section data-band-index="2" id="about" class="index-about-section" data-layout-spec="בית-about" dir="rtl">
+  <!-- Decorative blob -->
+  <div class="about-blob-decor" aria-hidden="true"></div>
+
+  <div class="about-container">
+    <!-- Content Column (START = RIGHT in RTL) -->
+    <div class="about-content">
+      <!-- Script underline decoration -->
+      <div class="about-label-wrap">
+        <span class="about-eyebrow">הכירי את הקורס</span>
+        <svg class="about-underline-svg" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 140 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 13 C30 5, 60 16, 90 8 C110 3, 128 11, 136 9" stroke="var(--secondary)" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.75"></path>
+        </svg>
+      </div>
+
+      <h2 class="about-heading">האמנות של גבות טבעיות —<br>מקצוע שמתחיל בידיים שלך</h2>
+
+      <p class="about-intro">קורס עיצוב גבות טבעיות של נטלי דנילוב נולד מתוך אהבה אמיתית לאסתטיקה נקייה ולתוצאות שנראות כאילו כך נולדת. כאן לא לומדים טכניקות מסובכות שמרחיקות — לומדים שיטה מעשית, אישית ואמינה שמכבדת את מבנה הפנים הייחודי של כל לקוחה.</p>
+
+      <div class="about-callouts">
+        <div class="about-callout">
+          <div class="about-callout-icon" aria-hidden="true">
+            <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+              <circle cx="16" cy="16" r="14" stroke="var(--secondary)" stroke-width="1.8"></circle>
+              <path d="M10 16.5 C11.5 13, 14 11, 16 11 C18 11, 20.5 13, 22 16.5" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" fill="none"></path>
+              <circle cx="16" cy="20" r="2" fill="var(--secondary)" opacity="0.7"></circle>
+            </svg>
+          </div>
+          <div class="about-callout-body">
+            <h3 class="about-callout-title">למי מתאים הקורס?</h3>
+            <p class="about-callout-text">אמהות צעירות, סטודנטיות, נשים שרוצות הכנסה נוספת, ומטפלות בתחום היופי שמחפשות להרחיב את הידע — כולן מוזמנות. לא נדרש ניסיון קודם.</p>
+          </div>
+        </div>
+
+        <div class="about-callout">
+          <div class="about-callout-icon" aria-hidden="true">
+            <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+              <path d="M6 24 C8 18, 12 14, 16 12 C20 10, 24 11, 26 14" stroke="var(--secondary)" stroke-width="1.8" stroke-linecap="round" fill="none"></path>
+              <path d="M8 26 C10 21, 13 17, 16 15 C19 13, 22 14, 24 17" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.7"></path>
+              <circle cx="16" cy="9" r="3" stroke="var(--secondary)" stroke-width="1.6" fill="none"></circle>
+            </svg>
+          </div>
+          <div class="about-callout-body">
+            <h3 class="about-callout-title">מה הופך את השיטה לנגישה?</h3>
+            <p class="about-callout-text">הלמידה מותאמת אישית, מתקדמת בקצב שלך, ומבוססת על עבודה אמיתית — לא תיאוריה יבשה. נטלי מלווה כל תלמידה עם מגע אנושי וחם לאורך כל הדרך.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Imagery Column (END = LEFT in RTL) -->
+    <div class="about-imagery">
+      <div class="about-img-main-wrap">
+        <img loading="lazy" decoding="async" data-placeholder="index-about-image-1" data-context="Professional beauty studio setting: a skilled female instructor demonstrating natural eyebrow shaping technique on a client, warm studio lighting, soft parchment and terracotta tones, close-up of precise brow pencil strokes, intimate educational atmosphere, editorial beauty photography style" width="520" height="620" src="/assets/site-index-about-image-1.webp" alt="נטלי דנילוב מדגימה עיצוב גבות טבעיות בסטודיו" class="about-img-main">
+        <!-- Botanical decoration -->
+        <svg class="about-botanical" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M60 80 C55 60, 40 45, 20 30" stroke="#C9A87C" stroke-width="1.4" stroke-linecap="round" opacity="0.45" fill="none"></path>
+          <path d="M60 80 C65 58, 80 42, 100 28" stroke="#C9A87C" stroke-width="1.4" stroke-linecap="round" opacity="0.45" fill="none"></path>
+          <path d="M40 38 C38 30, 30 24, 22 20" stroke="#C9A87C" stroke-width="1.1" stroke-linecap="round" opacity="0.35" fill="none"></path>
+          <path d="M50 52 C44 46, 34 44, 26 46" stroke="#C9A87C" stroke-width="1" stroke-linecap="round" opacity="0.3" fill="none"></path>
+          <path d="M72 44 C78 38, 88 36, 96 38" stroke="#C9A87C" stroke-width="1" stroke-linecap="round" opacity="0.3" fill="none"></path>
+          <ellipse cx="20" cy="28" rx="5" ry="3" fill="#C9A87C" opacity="0.22" transform="rotate(-20 20 28)"></ellipse>
+          <ellipse cx="100" cy="26" rx="5" ry="3" fill="#C9A87C" opacity="0.22" transform="rotate(15 100 26)"></ellipse>
+        </svg>
+      </div>
+
+      <!-- Backplate tile peeking from bottom-end corner -->
+      <div class="about-img-backplate-wrap">
+        <img loading="lazy" decoding="async" data-placeholder="index-about-image-2" data-context="Close-up flat lay of professional eyebrow tools: fine brow pencils, mapping thread, measuring calipers and a small mirror on a warm cream linen surface, soft natural light, beauty education course materials, warm terracotta and parchment color palette" width="260" height="200" src="/assets/site-index-about-image-2.webp" alt="כלי עיצוב גבות מקצועיים" class="about-img-backplate">
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom divider: torn soft cream edge transitioning to gallery -->
+  <div class="about-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,72 L0,34 Q40,28 80,36 T160,30 Q210,24 260,33 T360,27 Q410,32 460,26 T560,31 Q610,36 660,28 T760,33 Q810,27 860,34 T960,28 Q1010,24 1060,31 T1160,26 L1200,30 L1200,72 Z" fill="#FAF6F2"></path>
+    </svg>
+  </div>
+</section>
+
+<section data-band-index="3" id="gallery" class="index-gallery-section" data-layout-spec="בית-gallery" dir="rtl">
+  <!-- Decorative blob -->
+  <div class="gallery-blob-decor" aria-hidden="true"></div>
+
+  <div class="gallery-container">
+    <!-- Section Header -->
+    <div class="gallery-header">
+      <h2 class="gallery-title">הצצה לעולם הקורס</h2>
+      <!-- Script underline decoration -->
+      <svg class="gallery-title-flourish" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 180 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M170,8 C140,4 100,16 60,12 C30,9 10,14 4,18" stroke="var(--secondary)" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.7"></path>
+      </svg>
+      <p class="gallery-subtitle">כל תמונה כאן מספרת סיפור של למידה אמיתית — יד מיומנת, גבה טבעית, וסביבת עבודה שקטה ומזמינה. זה הקורס שלנו, כפי שהוא.</p>
+    </div>
+
+    <!-- Asymmetrical Gallery Grid -->
+    <div class="gallery-grid">
+      <!-- Large image - START side (right in RTL) -->
+      <figure class="gallery-item gallery-item--large">
+        <img loading="lazy" decoding="async" data-placeholder="index-gallery-image-1" data-context="Close-up editorial photo of a professional eyebrow artist carefully shaping a natural brow on a client. Warm ambient lighting, soft skin texture visible, linen-toned background. Muted, tactile, authentic beauty studio atmosphere. Hands using a fine brow brush or pencil tool. Natural-looking result, not overly dramatic." width="600" height="800" src="/assets/site-index-gallery-image-1.webp" alt="עיצוב גבות טבעיות — תרגול מעשי בקורס">
+        <figcaption class="gallery-caption">תרגול מעשי</figcaption>
+      </figure>
+
+      <!-- Three smaller tiles - END side (left in RTL) -->
+      <div class="gallery-tiles">
+        <figure class="gallery-item gallery-item--small">
+          <img loading="lazy" decoding="async" data-placeholder="index-gallery-image-2" data-context="Extreme close-up of a perfectly shaped natural eyebrow on smooth skin. Soft diffused light, warm skin tones. The brow looks full and natural, not drawn-on. Editorial beauty photography style with muted parchment background tones." width="400" height="300" src="/assets/site-index-gallery-image-2.webp" alt="גבה טבעית בצילום קרוב — תוצאה של קורס עיצוב גבות">
+          <figcaption class="gallery-caption">גבה טבעית — לפני ואחרי</figcaption>
+        </figure>
+
+        <figure class="gallery-item gallery-item--small">
+          <img loading="lazy" decoding="async" data-placeholder="index-gallery-image-3" data-context="Flat lay of professional eyebrow styling tools arranged neatly on a textured linen surface or ceramic tray. Tools include fine brow brushes, pencils, small scissors, and a mapping thread. Warm ambient light, earthy terracotta and cream color palette. Tactile, editorial, minimal styling." width="400" height="300" src="/assets/site-index-gallery-image-3.webp" alt="כלי עיצוב גבות מקצועיים על משטח פשתן">
+          <figcaption class="gallery-caption">הכלים של המקצוע</figcaption>
+        </figure>
+
+        <figure class="gallery-item gallery-item--small">
+          <img loading="lazy" decoding="async" data-placeholder="index-gallery-image-4" data-context="A warm, inviting beauty studio learning environment. A student practicing eyebrow design on a model, with an instructor nearby. Soft natural light through a window, neutral linen tones, small mirrors and tools on a wooden desk. Calm, supportive, human atmosphere. Not clinical — feels like a cozy studio." width="400" height="300" src="/assets/site-index-gallery-image-4.webp" alt="סביבת למידה חמה ומזמינה בקורס עיצוב גבות">
+          <figcaption class="gallery-caption">סביבת הלמידה שלנו</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom diagonal clip-path divider -->
+  <div class="gallery-divider-wrapper" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,90 L0,55 L1440,20 L1440,90 Z" fill="#2E2723"></path>
+    </svg>
+  </div>
+</section>
+
+<section data-band-index="4" id="testimonials" class="index-testimonials-section" data-layout-spec="בית-testimonials" dir="rtl">
+  <!-- Decorative brow mapping SVG background -->
+  <div class="index-testimonials-section__brow-bg" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+      <!-- Brow arch line 1 -->
+      <path d="M100,200 Q200,140 320,160 Q420,175 500,155 Q580,138 660,162" stroke="#C9775B" stroke-width="1.5" fill="none" opacity="0.08"></path>
+      <!-- Brow arch line 2 -->
+      <path d="M100,220 Q200,158 320,178 Q420,193 500,173 Q580,156 660,180" stroke="#C9775B" stroke-width="0.8" fill="none" opacity="0.06"></path>
+      <!-- Measurement lines -->
+      <line x1="160" y1="130" x2="160" y2="240" stroke="#C9775B" stroke-width="0.8" opacity="0.06"></line>
+      <line x1="320" y1="110" x2="320" y2="220" stroke="#C9775B" stroke-width="0.8" opacity="0.06"></line>
+      <line x1="500" y1="115" x2="500" y2="215" stroke="#C9775B" stroke-width="0.8" opacity="0.06"></line>
+      <line x1="660" y1="120" x2="660" y2="220" stroke="#C9775B" stroke-width="0.8" opacity="0.06"></line>
+      <!-- Brow arch line right side -->
+      <path d="M700,200 Q800,140 920,160 Q1020,175 1100,155" stroke="#C9775B" stroke-width="1.5" fill="none" opacity="0.06"></path>
+      <path d="M700,220 Q800,158 920,178 Q1020,193 1100,173" stroke="#C9775B" stroke-width="0.8" fill="none" opacity="0.04"></path>
+      <!-- Horizontal guide line -->
+      <line x1="80" y1="200" x2="1120" y2="200" stroke="#F4EDE4" stroke-width="0.5" stroke-dasharray="6,10" opacity="0.05"></line>
+      <!-- Brow arch lower section -->
+      <path d="M150,420 Q280,360 420,380 Q540,395 640,372 Q730,355 820,378" stroke="#8B9274" stroke-width="1.2" fill="none" opacity="0.07"></path>
+      <line x1="210" y1="340" x2="210" y2="445" stroke="#8B9274" stroke-width="0.8" opacity="0.05"></line>
+      <line x1="420" y1="330" x2="420" y2="430" stroke="#8B9274" stroke-width="0.8" opacity="0.05"></line>
+      <line x1="640" y1="335" x2="640" y2="420" stroke="#8B9274" stroke-width="0.8" opacity="0.05"></line>
+      <!-- Organic blob decoration -->
+      <ellipse cx="1050" cy="450" rx="180" ry="120" fill="#E8C4A8" opacity="0.05"></ellipse>
+      <ellipse cx="120" cy="500" rx="140" ry="90" fill="#C9775B" opacity="0.04"></ellipse>
+    </svg>
+  </div>
+
+  <div class="index-testimonials-section__container">
+    <!-- Intro block -->
+    <div class="index-testimonials-section__intro">
+      <span class="index-testimonials-section__eyebrow">מה אומרות הבוגרות</span>
+      <h2 class="index-testimonials-section__title">סיפורים אמיתיים מנשים אמיתיות</h2>
+      <p class="index-testimonials-section__subtitle">בוגרות קורס עיצוב גבות טבעיות משתפות בחוויה האישית שלהן — מהרגע הראשון ועד לתוצאות שמדברות בעד עצמן.</p>
+    </div>
+
+    <!-- Testimonials grid -->
+    <div class="index-testimonials-section__grid">
+
+      <!-- Card 1 -->
+      <article class="index-testimonials-section__card">
+        <div class="index-testimonials-section__card-inner">
+          <div class="index-testimonials-section__quote-icon" aria-hidden="true">
+            <svg data-element-type="icon" data-icon-type="svg" width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 24V14.4C0 10.56 0.8 7.36 2.4 4.8C4.08 2.24 6.56 0.64 9.84 0L11.52 2.88C9.6 3.36 8.04 4.32 6.84 5.76C5.72 7.2 5.12 8.88 5.04 10.8H9.6V24H0ZM18.48 24V14.4C18.48 10.56 19.28 7.36 20.88 4.8C22.56 2.24 25.04 0.64 28.32 0L30 2.88C28.08 3.36 26.52 4.32 25.32 5.76C24.2 7.2 23.6 8.88 23.52 10.8H28.08V24H18.48Z" fill="currentColor"></path>
+            </svg>
+          </div>
+          <blockquote class="index-testimonials-section__quote">
+            <p>הייתי בטוחה שלמידת עיצוב גבות מקצועי מחייבת שעות ארוכות בסלון. נטלי הוכיחה לי שאפשר ללמוד בקצב שלי, בין ההאכלות לשעות השינה של הילדה. הקורס ברור, חם ומלא בידע שמיד יכולתי ליישם. היום אני עושה גבות לחברות ומרגישה מקצועית לגמרי.</p>
+          </blockquote>
+          <footer class="index-testimonials-section__card-footer">
+            <h3 class="index-testimonials-section__name">מיכל לוי</h3>
+            <span class="index-testimonials-section__role">אמא צעירה ובוגרת הקורס</span>
+            <div class="index-testimonials-section__stars" aria-label="דירוג 5 כוכבים">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </footer>
+        </div>
+      </article>
+
+      <!-- Card 2 - middle, taller/featured -->
+      <article class="index-testimonials-section__card index-testimonials-section__card--featured">
+        <div class="index-testimonials-section__card-inner">
+          <div class="index-testimonials-section__featured-badge">המלצה נבחרת</div>
+          <div class="index-testimonials-section__quote-icon" aria-hidden="true">
+            <svg data-element-type="icon" data-icon-type="svg" width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 24V14.4C0 10.56 0.8 7.36 2.4 4.8C4.08 2.24 6.56 0.64 9.84 0L11.52 2.88C9.6 3.36 8.04 4.32 6.84 5.76C5.72 7.2 5.12 8.88 5.04 10.8H9.6V24H0ZM18.48 24V14.4C18.48 10.56 19.28 7.36 20.88 4.8C22.56 2.24 25.04 0.64 28.32 0L30 2.88C28.08 3.36 26.52 4.32 25.32 5.76C24.2 7.2 23.6 8.88 23.52 10.8H28.08V24H18.48Z" fill="currentColor"></path>
+            </svg>
+          </div>
+          <blockquote class="index-testimonials-section__quote">
+            <p>עבדתי שנים כמאפרת ותמיד הרגשתי שגבות הן החוליה החלשה שלי. הקורס של נטלי שינה את זה לחלוטין. למדתי טכניקות מיפוי גבות מדויקות, הבנתי את ההבדל בין צורות פנים ואיך לבנות גבה טבעית שמחמיאה לכל לקוחה. ההכנסה שלי עלתה ב-30% מאז שהוספתי את השירות הזה.</p>
+          </blockquote>
+          <footer class="index-testimonials-section__card-footer">
+            <h3 class="index-testimonials-section__name">שירה כהן</h3>
+            <span class="index-testimonials-section__role">מאפרת מקצועית, 6 שנות ניסיון</span>
+            <div class="index-testimonials-section__stars" aria-label="דירוג 5 כוכבים">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </footer>
+        </div>
+        <!-- Decorative accent line -->
+        <div class="index-testimonials-section__accent-line" aria-hidden="true"></div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="index-testimonials-section__card">
+        <div class="index-testimonials-section__card-inner">
+          <div class="index-testimonials-section__quote-icon" aria-hidden="true">
+            <svg data-element-type="icon" data-icon-type="svg" width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 24V14.4C0 10.56 0.8 7.36 2.4 4.8C4.08 2.24 6.56 0.64 9.84 0L11.52 2.88C9.6 3.36 8.04 4.32 6.84 5.76C5.72 7.2 5.12 8.88 5.04 10.8H9.6V24H0ZM18.48 24V14.4C18.48 10.56 19.28 7.36 20.88 4.8C22.56 2.24 25.04 0.64 28.32 0L30 2.88C28.08 3.36 26.52 4.32 25.32 5.76C24.2 7.2 23.6 8.88 23.52 10.8H28.08V24H18.48Z" fill="currentColor"></path>
+            </svg>
+          </div>
+          <blockquote class="index-testimonials-section__quote">
+            <p>נרשמתי לקורס עיצוב גבות טבעיות בלי ניסיון קודם בכלל, ופחדתי שאהיה האחת שלא מצליחה. נטלי יצרה סביבה כל כך תומכת ומעצימה — אף פעם לא הרגשתי שאני שואלת שאלה טיפשית. היום אני עובדת על גבות של חברות ומשפחה ומקבלת מחמאות שלא האמנתי שאקבל.</p>
+          </blockquote>
+          <footer class="index-testimonials-section__card-footer">
+            <h3 class="index-testimonials-section__name">נועה אברהם</h3>
+            <span class="index-testimonials-section__role">סטודנטית, מתחילה בעולם היופי</span>
+            <div class="index-testimonials-section__stars" aria-label="דירוג 5 כוכבים">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </footer>
+        </div>
+      </article>
+
+    </div>
+    <!-- /grid -->
+  </div>
+
+  <!-- Bottom wave divider transitioning to trust-signals (light/cream) -->
+  <div class="index-testimonials-section__divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,90 L0,48 Q60,38 120,46 T240,42 Q300,36 360,44 T480,40 Q540,34 600,42 T720,38 Q780,32 840,40 T960,36 Q1020,30 1080,38 T1200,44 L1200,90 Z" fill="#FAF6F2"></path>
+    </svg>
+  </div>
+
+</section>
+
+<section data-band-index="5" id="stats" class="index-stats-section" data-layout-spec="בית-stats" dir="rtl">
+  <div class="index-stats-container">
+    <div class="index-stats-header">
+      <h2 class="index-stats-title">למה לבחור בקורס עיצוב גבות טבעיות שלנו?</h2>
+      <p class="index-stats-subtitle">קורס עיצוב גבות טבעיות שמעניק לך את הכלים המקצועיים, הביטחון העצמי, וההכוונה האישית שתצטרכי כדי להצליח — מהיום הראשון ועד לתוצאות אמיתיות.</p>
+    </div>
+    <div class="index-stats-grid">
+      <article class="index-stat-card">
+        <div class="index-stat-icon-line">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="18" cy="12" r="6"></circle>
+            <path d="M6 30c0-6.627 5.373-12 12-12s12 5.373 12 12"></path>
+          </svg>
+        </div>
+        <div class="index-stat-number">100%</div>
+        <h3 class="index-stat-label">הכוונה אישית</h3>
+        <p class="index-stat-desc">כל תלמידה מקבלת ליווי צמוד ותשובות לשאלות לאורך כל הקורס — כי אנחנו מאמינות שאף אחת לא נשארת מאחור.</p>
+      </article>
+      <article class="index-stat-card">
+        <div class="index-stat-icon-line">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="4" y="6" width="28" height="22" rx="3"></rect>
+            <path d="M12 6V4M24 6V4M4 14h28"></path>
+          </svg>
+        </div>
+        <div class="index-stat-number">12+</div>
+        <h3 class="index-stat-label">שיעורים מעשיים</h3>
+        <p class="index-stat-desc">מודולים מובנים שמתקדמים מהיסודות ועד לטכניקות מקצועיות, בקצב שמתאים לחיים שלך — גמיש, נגיש, ומעשי.</p>
+      </article>
+      <article class="index-stat-card">
+        <div class="index-stat-icon-line">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 4l3.5 7 7.5 1.1-5.5 5.3 1.3 7.6L18 21.5l-6.8 3.5 1.3-7.6L7 12.1l7.5-1.1z"></path>
+          </svg>
+        </div>
+        <div class="index-stat-number">תוצאות טבעיות</div>
+        <h3 class="index-stat-label">גישה ייחודית</h3>
+        <p class="index-stat-desc">הקורס מתמקד בעיצוב גבות שנראה אמיתי ומחמיא — לא מוגזם ולא מלאכותי. תלמדי לקרוא את הפנים ולהתאים את הגבה לכל לקוחה.</p>
+      </article>
+      <article class="index-stat-card">
+        <div class="index-stat-icon-line">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M10 18l5 5 11-11"></path>
+            <circle cx="18" cy="18" r="14"></circle>
+          </svg>
+        </div>
+        <div class="index-stat-number">מיידי</div>
+        <h3 class="index-stat-label">גישה מלאה מהרגע הראשון</h3>
+        <p class="index-stat-desc">ברגע שנרשמת — כל התכנים פתוחים לך. ללא המתנה, ללא הגבלת זמן. תלמדי בזמן שמתאים לך ותחזרי לחומר כמה פעמים שתרצי.</p>
+      </article>
+    </div>
+  </div>
+  <div class="index-stats-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="statsGradFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#F0E4D8" stop-opacity="0"></stop>
+          <stop offset="100%" stop-color="#C9775B" stop-opacity="0.18"></stop>
+        </linearGradient>
+      </defs>
+      <path d="M0,90 L0,48 Q150,28 300,44 T600,32 Q750,22 900,40 T1200,36 L1200,90 Z" fill="#2C1F17"></path>
+      <path d="M0,90 L0,62 Q200,46 400,58 T800,50 Q1000,44 1200,56 L1200,90 Z" fill="#2C1F17"></path>
+    </svg>
+  </div>
+</section>
+
+<section data-band-index="6" id="contact" class="index-contact-section" data-layout-spec="בית-contact" dir="rtl">
+  <!-- Decorative organic blob -->
+  <div class="contact-blob-decor" aria-hidden="true"></div>
+
+  <div class="contact-container">
+
+    <!-- Content Side (START = RIGHT in RTL) -->
+    <div class="contact-content-side">
+      <!-- Botanical decoration -->
+      <svg class="contact-botanical" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M60,130 C60,130 20,100 30,60 C40,20 80,10 90,40 C100,70 70,80 60,130Z" stroke="#C9A87C" stroke-width="1.5" fill="none" opacity="0.22"></path>
+        <path d="M60,130 C60,130 95,95 85,58 C75,22 42,18 38,46 C34,74 58,82 60,130Z" stroke="#C9A87C" stroke-width="1.2" fill="none" opacity="0.18"></path>
+        <path d="M58,100 Q40,85 35,68" stroke="#C9A87C" stroke-width="1" fill="none" opacity="0.2"></path>
+        <path d="M62,108 Q82,92 86,74" stroke="#C9A87C" stroke-width="1" fill="none" opacity="0.2"></path>
+        <path d="M59,78 Q44,65 42,50" stroke="#C9A87C" stroke-width="0.8" fill="none" opacity="0.15"></path>
+      </svg>
+
+      <div class="contact-badge">הצטרפי לקורס</div>
+      <h2 class="contact-heading">מוכנה להתחיל את המסע שלך בעיצוב גבות טבעיות?</h2>
+      <p class="contact-intro">קורס עיצוב גבות טבעיות שלנו מעניק לך את הכלים המקצועיים, הביטחון והמיומנות ליצור מראה גבות מושלם ואותנטי. השאירי פרטים ואחזור אלייך בהקדם עם כל המידע שתצטרכי.</p>
+
+      <div class="contact-support-note">
+        <div class="support-note-icon" aria-hidden="true">
+          <svg data-element-type="icon" data-icon-type="svg" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="1.8"></path>
+            <path d="M12 8V12L15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+          </svg>
+        </div>
+        <div class="support-note-text">
+          <h3 class="support-note-title">צעד ראשון ללא לחץ</h3>
+          <p class="support-note-desc">אין מחויבות — רק שיחה חמה על האפשרויות שמתאימות לך. אני כאן לענות על כל שאלה.</p>
+        </div>
+      </div>
+
+      <div class="contact-reassurance-list">
+        <div class="reassurance-item">
+          <span class="reassurance-dot" aria-hidden="true"></span>
+          <span>מתאים גם לחסרות ניסיון</span>
+        </div>
+        <div class="reassurance-item">
+          <span class="reassurance-dot" aria-hidden="true"></span>
+          <span>ליווי אישי לאורך כל הקורס</span>
+        </div>
+        <div class="reassurance-item">
+          <span class="reassurance-dot" aria-hidden="true"></span>
+          <span>תעודה מוכרת בתום הקורס</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Side (END = LEFT in RTL) -->
+    <div class="contact-form-side">
+      <div class="contact-form-card">
+        <div class="form-card-header">
+          <h3 class="form-card-title">השאירי פרטים ואחזור אלייך</h3>
+          <p class="form-card-subtitle">מלאי את הטופס ואיצור איתך קשר תוך 24 שעות</p>
+        </div>
+
+        <form class="contact-form" novalidate="">
+          <div class="form-field">
+            <label for="contact-name" class="form-label">שם מלא</label>
+            <input type="text" id="contact-name" name="name" class="form-input" placeholder="השם שלך" required="">
+          </div>
+
+          <div class="form-field">
+            <label for="contact-email" class="form-label">אימייל</label>
+            <input type="email" id="contact-email" name="email" class="form-input" placeholder="האימייל שלך" required="">
+          </div>
+
+          <div class="form-field">
+            <label for="contact-phone" class="form-label">טלפון</label>
+            <input type="tel" id="contact-phone" name="phone" class="form-input" placeholder="מספר הטלפון שלך">
+          </div>
+
+          <div class="form-field">
+            <label for="contact-message" class="form-label">הודעה</label>
+            <textarea id="contact-message" name="message" class="form-textarea" placeholder="ספרי לי קצת על עצמך ומה מעניין אותך לדעת על קורס גבות למתחילות..." rows="4"></textarea>
+          </div>
+
+          <div class="privacy-consent">
+            <label class="privacy-consent-label">
+              <input type="checkbox" name="privacy_consent" class="privacy-consent-checkbox" required="">
+              <span>קראתי ואני מסכים/ה ל<a href="/terms" target="_blank">תנאי השימוש</a> ול<a href="/privacy" target="_blank">מדיניות הפרטיות</a></span>
+            </label>
+          </div>
+
+          <button type="submit" class="form-submit-btn btn-primary">
+            <span>שלחי לי פרטים על הקורס</span>
+            <svg data-element-type="icon" data-icon-type="svg" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M19 12H5M12 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+        </form>
+
+        <div class="form-direct-contact">
+          <span class="direct-contact-line">מעדיפה לדבר ישירות?</span>
+          
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+  </main>
+  
+  <footer class="site-footer" dir="rtl">
+  <div class="footer-container">
+    <div class="footer-top">
+
+      <!-- Column 1: Company Info -->
+      <div class="footer-col footer-brand">
+        <img src="/assets/beauty-cosmetics-education-logo.webp" alt="נטלי דנילוב עיצוב גבות" class="logo">
+        <p class="footer-tagline">בית הספר המוביל לעיצוב גבות טבעי ומקצועי. לומדים את האמנות, מרגישים את ההבדל.</p>
+        <div class="footer-badges">
+          <span class="badge"><i class="fas fa-certificate"></i> הכשרה מקצועית</span>
+          <span class="badge"><i class="fas fa-star"></i> ליווי אישי</span>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="footer-col footer-links">
+        <h4 class="footer-heading">ניווט מהיר</h4>
+        <ul class="footer-nav">
+          <li><a href="#features"><i class="fas fa-chevron-left"></i> Features</a></li>
+          <li><a href="#about"><i class="fas fa-chevron-left"></i> About</a></li>
+          <li><a href="#gallery"><i class="fas fa-chevron-left"></i> Gallery</a></li>
+          <li><a href="#testimonials"><i class="fas fa-chevron-left"></i> Testimonials</a></li>
+          <li><a href="#stats"><i class="fas fa-chevron-left"></i> Stats</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Contact Info -->
+      <div class="footer-col footer-contact-col">
+        <h4 class="footer-heading">צרו קשר</h4>
+        <ul class="footer-contact">
+          <li>
+            <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+            <span class="contact-text"><a href="mailto:[business_email]">[business_email]</a></span>
+          </li>
+          <li>
+            <span class="contact-icon"><i class="fas fa-phone"></i></span>
+            <span class="contact-text"><a href="tel:[business_phone]">[business_phone]</a></span>
+          </li>
+          <li><a href="/"><span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+            <span class="contact-text">[business_address]</span></a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Social Media -->
+      <div class="footer-col footer-social-col">
+        <h4 class="footer-heading">עקבו אחרינו</h4>
+        <p class="footer-social-text">הצטרפו לקהילה שלנו ברשתות החברתיות</p>
+        <div class="footer-social">
+          
+          
+          
+        </div>
+        <div class="footer-hours">
+          <h5 class="footer-hours-title"><i class="fas fa-clock"></i> שעות פעילות</h5>
+          <p>ראשון – חמישי: 09:00–19:00</p>
+          <p>שישי: 09:00–14:00</p>
+          <p>שבת: <span class="closed">סגור</span></p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Divider -->
+    <div class="footer-divider"></div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <p class="footer-copyright">© 2026 נטלי דנילוב עיצוב גבות. כל הזכויות שמורות.</p>
+      <div class="footer-legal">
+        <a href="/privacy">מדיניות פרטיות</a>
+        <span class="legal-sep">|</span>
+        <a href="/terms">תנאי שימוש</a>
+        <span class="legal-sep">|</span>
+        <a href="/accessibility">נגישות</a>
+        <span class="legal-sep">|</span>
+        <a href="https://zappy5.com" target="_blank" class="zappy-attribution">נוצר באמצעות Zappy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+  
+  <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <div data-integration="accessibility:toolbar"></div>
+
+    <script src="/script.js"></script>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+</body>
+</html>

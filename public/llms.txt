@@ -1,0 +1,71 @@
+# נטלי דנילוב עיצוב גבות — Generative Engine Optimization Map
+
+> A landing page for a natural eyebrow design course in the beauty and cosmetics industry. The course focuses on the art of natural-looking eyebrow shaping and styling, targeting individuals interested in learning professional brow techniques.
+
+---
+
+## Pages
+
+### בית
+https://-640242a4.zappy5.app
+רוצה ללמוד עיצוב גבות טבעיות כמו מקצוענית? קורס עיצוב גבות טבעיות של נטלי דנילוב מעניק לך את כל הכלים להצליח. הירשמי עכשיו!
+
+## Legal & Policy
+
+### Privacy Policy
+https://-640242a4.zappy5.app/privacy
+Information about how user data is collected, stored, and protected.
+
+### Terms & Conditions
+https://-640242a4.zappy5.app/terms
+Legal terms describing service usage, rights, and policies.
+
+### Accessibility Statement
+https://-640242a4.zappy5.app/accessibility
+Information about WCAG compliance and accessibility features.
+
+---
+
+## How to Contact Us
+
+- (No contact details configured yet.)
+
+### Contact form
+- URL: https://-640242a4.zappy5.app
+- Endpoint: https://-640242a4.zappy5.app/api/email/contact-form
+- Method: POST
+- Content-Type: application/json
+- Fields:
+  - `name` (text, required)
+  - `email` (email, required)
+  - `phone` (tel)
+  - `message` (textarea)
+  - `privacy_consent` (checkbox, required)
+
+---
+
+# Business Context (for LLM understanding)
+
+## About נטלי דנילוב עיצוב גבות
+A landing page for a natural eyebrow design course in the beauty and cosmetics industry. The course focuses on the art of natural-looking eyebrow shaping and styling, targeting individuals interested in learning professional brow techniques.
+
+## Services/Products
+- קורס עיצוב גבות טבעיות
+
+## Target Audience
+- אמהות צעירות
+- מקצועניות בתחום היופי
+- סטודנטיות
+- נערות מתבגרות
+- נשים
+
+## Industry
+Beauty & Cosmetics Education
+
+---
+
+# Machine-readable feeds
+
+- Sitemap (XML): https://-640242a4.zappy5.app/sitemap.xml
+- Robots: https://-640242a4.zappy5.app/robots.txt
+- Flattened page text (for LLMs): https://-640242a4.zappy5.app/llms-full.txt
