@@ -2,13 +2,13 @@
 
 A landing page for a natural eyebrow design course in the beauty and cosmetics industry. The course focuses on the art of natural-looking eyebrow shaping and styling, targeting individuals interested in learning professional brow techniques.
 
-Source: https://-640242a4.zappy5.app
+Source: https://example.com
 
 ---
 
 ## גלי את הסוד לגבות מושלמות — נטלי דנילוב עיצוב גבות
 
-URL: https://-640242a4.zappy5.app
+URL: https://example.com
 Description: רוצה ללמוד עיצוב גבות טבעיות כמו מקצוענית? קורס עיצוב גבות טבעיות של נטלי דנילוב מעניק לך את כל הכלים להצליח. הירשמי עכשיו!
 
 גלי את הסוד לגבות מושלמות — נטלי דנילוב עיצוב גבות
@@ -701,7 +701,7 @@ Description: רוצה ללמוד עיצוב גבות טבעיות כמו מקצ�
 
 ## מדיניות פרטיות
 
-URL: https://-640242a4.zappy5.app/privacy
+URL: https://example.com/privacy
 Description: מדיניות הפרטיות שלנו - כיצד אנו אוספים, משתמשים ומגנים על המידע שלכם
 
 מדיניות פרטיות
@@ -978,7 +978,7 @@ Description: מדיניות הפרטיות שלנו - כיצד אנו אוספי
 
 ## הצהרת נגישות
 
-URL: https://-640242a4.zappy5.app/accessibility
+URL: https://example.com/accessibility
 Description: הצהרת הנגישות שלנו - מחויבותנו לנגישות דיגיטלית
 
 הצהרת נגישות
@@ -1264,7 +1264,7 @@ Description: הצהרת הנגישות שלנו - מחויבותנו לנגיש�
 
 ## תנאי שימוש
 
-URL: https://-640242a4.zappy5.app/terms
+URL: https://example.com/terms
 Description: תנאי השימוש באתר - הזכויות והחובות של המשתמשים
 
 תנאי שימוש
